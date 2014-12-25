@@ -1,0 +1,4 @@
+{
+    "enabled":true,
+    "provider": ["Tee\\Product\\ServiceProvider"]
+}
