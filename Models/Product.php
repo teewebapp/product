@@ -23,6 +23,7 @@ class Product extends Model implements SluggableInterface
     protected $fillable = [
         'name',
         'description',
+        'reference',
         'text',
         'price',
         'weight',
@@ -34,6 +35,12 @@ class Product extends Model implements SluggableInterface
     {
         return array(
             'name' => 'Nome',
+            'reference' => 'Referência',
+            'description' => 'Descrição (Resumo)',
+            'text' => 'Texto',
+            'price' => 'Preço',
+            'weight' => 'Peso (gramas)',
+            'stock' => 'Estoque'
         );
     }
 

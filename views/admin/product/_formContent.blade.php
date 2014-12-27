@@ -22,9 +22,43 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="information">
-            <div class="form-group">
-                {{ Form::labelModel($model, 'name') }}
-                {{ Form::text('name', null, array('class' => 'form-control')) }}
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        {{ Form::labelModel($model, 'reference') }}
+                        {{ Form::text('reference', null, array('class' => 'form-control')) }}
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        {{ Form::labelModel($model, 'name') }}
+                        {{ Form::text('name', null, array('class' => 'form-control')) }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ Form::labelModel($model, 'price') }}
+                        {{ Form::text('price', null, array('class' => 'form-control')) }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ Form::labelModel($model, 'weight') }}
+                        {{ Form::text('weight', null, array('class' => 'form-control')) }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ Form::labelModel($model, 'stock') }}
+                        {{ Form::text('stock', null, array('class' => 'form-control')) }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ Form::labelModel($model, 'description') }}
+                        {{ Form::text('description', null, array('class' => 'form-control')) }}
+                    </div>
+                </div>
             </div>
         </div>
 
