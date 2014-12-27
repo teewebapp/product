@@ -78,7 +78,7 @@ class InitialTables extends Migration {
 
 			$table->string('name');
 			$table->string('description');
-			$table->unsignedInteger('category_id');
+			$table->unsignedInteger('category_id')->nullable();
 			$table->foreign('category_id')->references('id')->on('product_categories');
 
 			$table->timestamps();

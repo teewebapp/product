@@ -2,40 +2,62 @@
 
 namespace Tee\Product\Models;
 
-use Tee\System\Models\Model;
-
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
-
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
-
-use URL;
+use Tee\System\Models\Model,
+    Cviebrock\EloquentSluggable\SluggableInterface,
+    URL,
+    Validator,
+    Cviebrock\EloquentSluggable\SluggableTrait;
 
 class ProductCategory extends Model implements SluggableInterface
 {
-    use SoftDeletingTrait;
     use SluggableTrait;
 
-    public static $rules = [
-        'name' => 'required'
+    protected $sluggable = [
+        'build_from' => 'name',
+        'save_to'    => 'slug',
     ];
 
     protected $fillable = [
         'name',
         'description',
-        'slug',
+        'category_id'
     ];
 
     public static function getAttributeNames()
     {
         return array(
             'name' => 'Nome',
+            'fullName' => 'Nome',
             'description' => 'Descrição',
+            'category_id' => 'Categoria Pai'
         );
     }
 
     public function products()
     {
         return $this->belongsToMany(__NAMESPACE__.'\\Product');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(__NAMESPACE__.'\\ProductCategory', 'category_id');
+    }
+
+    public function getValidator($data, $scope)
+    {
+        return Validator::make($data, [
+            'name' => 'required'
+        ]);
+    }
+
+    public function getFullNameAttribute()
+    {
+        $name = $this->name;
+        $aux = $this;
+        while($aux->parent) {
+            $name = $aux->parent->name . ' > ' . $name;
+            $aux = $aux->parent;
+        }
+        return $name;
     }
 }
