@@ -26,37 +26,37 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         {{ Form::labelModel($model, 'reference') }}
-                        {{ Form::text('reference', null, array('class' => 'form-control')) }}
+                        {{ Form::text('reference', null, array('class' => 'form-control', 'name' => 'Product[reference]')) }}
                     </div>
                 </div>
                 <div class="col-md-10">
                     <div class="form-group">
                         {{ Form::labelModel($model, 'name') }}
-                        {{ Form::text('name', null, array('class' => 'form-control')) }}
+                        {{ Form::text('name', null, array('class' => 'form-control', 'name' => 'Product[name]')) }}
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         {{ Form::labelModel($model, 'price') }}
-                        {{ Form::text('price', null, array('class' => 'form-control')) }}
+                        {{ Form::text('price', null, array('class' => 'form-control', 'name' => 'Product[price]')) }}
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         {{ Form::labelModel($model, 'weight') }}
-                        {{ Form::text('weight', null, array('class' => 'form-control')) }}
+                        {{ Form::text('weight', null, array('class' => 'form-control', 'name' => 'Product[weight]')) }}
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         {{ Form::labelModel($model, 'stock') }}
-                        {{ Form::text('stock', null, array('class' => 'form-control')) }}
+                        {{ Form::text('stock', null, array('class' => 'form-control', 'name' => 'Product[stock]')) }}
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         {{ Form::labelModel($model, 'description') }}
-                        {{ Form::text('description', null, array('class' => 'form-control')) }}
+                        {{ Form::text('description', null, array('class' => 'form-control', 'name' => 'Product[description]')) }}
                     </div>
                 </div>
             </div>

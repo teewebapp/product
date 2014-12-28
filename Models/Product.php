@@ -17,7 +17,9 @@ class Product extends Model implements SluggableInterface
     use SluggableTrait;
 
     public static $rules = [
-        'name' => 'required'
+        'name' => 'required',
+        'reference' => 'required',
+        'price' => 'required',
     ];
 
     protected $fillable = [
