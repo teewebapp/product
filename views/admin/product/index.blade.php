@@ -1,7 +1,5 @@
 @extends('admin::layouts.main')
 
-{{ Tee\System\Asset::add(moduleAsset('admin', 'js/tableorder.js')) }}
-
 @section('content')
     <table class="table table-hover table-banner-list">
         <tbody>
@@ -19,8 +17,8 @@
                         <td>{{{ $model->category->fullName }}}</td>
                         <td>{{{ $model->price }}}</td>
                         <td>
-                            {{ HTML::updateButton('Editar', route("admin.$resourceName.edit", $model->id)) }}
-                            {{ HTML::deleteButton('Remover', route("admin.$resourceName.destroy", $model->id)) }}
+                            {{ HTML::updateButton('Editar', route("admin.product.edit", $model->id)) }}
+                            {{ HTML::deleteButton('Remover', route("admin.product.destroy", $model->id)) }}
                         </td>
                     </tr>
                 @endforeach
@@ -34,7 +32,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ route("admin.$resourceName.create") }}">
+    <a class="btn btn-primary" href="{{ route("admin.product.create") }}">
         Adicionar Produto
     </a>
 @stop

@@ -6,7 +6,7 @@ use Tee\System\Models\Model;
 
 use URL;
 
-class PromotionAttribute extends Model
+class ProductAttribute extends Model
 {
     public static $rules = [
         'name' => 'required'
@@ -16,7 +16,7 @@ class PromotionAttribute extends Model
         'product_id',
         'name',
         'value',
-        'tipo',
+        'type',
     ];
 
     public static function getAttributeNames()

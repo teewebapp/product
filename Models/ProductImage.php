@@ -45,4 +45,12 @@ class ProductImage extends Model implements StaplerableInterface
     {
         return $this->belongsTo(__NAMESPACE__.'\\Product', 'product_id');
     }
+
+    public function getImageUrlAttribute()
+    {
+        if($this->image_file_name)
+            return URL::to($this->image->url());
+        else
+            return URL::to(moduleAsset('system', 'images/no-photo.jpg'));
+    }
 }
