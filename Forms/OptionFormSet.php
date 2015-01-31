@@ -6,8 +6,8 @@ use ModelForm\FormSet;
 
 class OptionFormSet extends FormSet
 {
-    public function makeForm()
+    public function makeForm($model=null)
     {
-        return new OptionForm();
+        return new OptionForm(['model'=>$model]);
     }
 }

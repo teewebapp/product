@@ -18,10 +18,19 @@ class ImageForm extends Form
         return new ProductImage();
     }
 
+    public function makeValidator($data)
+    {
+        $validator = $this->_model->getValidator($data, null);
+        $validator->setAttributeNames(ProductImage::getAttributeNames());
+        return $validator;
+    }
+
     public function jsonSerialize()
     {
         $result = parent::jsonSerialize();
         $result['imageUrl'] = $this->getModel()->imageUrl;
+        $aux = explode(DIRECTORY_SEPARATOR, $result['imageUrl']);
+        $result['baseName'] = array_pop($aux);
         return $result;
     }
 }

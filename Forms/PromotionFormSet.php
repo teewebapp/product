@@ -6,8 +6,8 @@ use ModelForm\FormSet;
 
 class PromotionFormSet extends FormSet
 {
-    public function makeForm()
+    public function makeForm($model=null)
     {
-        return new PromotionForm();
+        return new PromotionForm(['model'=>$model]);
     }
 }

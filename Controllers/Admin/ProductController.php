@@ -2,26 +2,23 @@
 
 namespace Tee\Product\Controllers\Admin;
 
-use Tee\Admin\Controllers\AdminBaseController,
-    Tee\System\Breadcrumbs,
-    Tee\Product\Models\ProductCategory,
-    Tee\Product\Models\Product,
-    Tee\Product\Models\ProductImage,
-    Tee\Product\Models\Promotion,
-    Tee\Product\Models\ProductAttribute,
-    Tee\Product\Forms\InformationForm,
-    Tee\Product\Forms\ImageFormSet,
-    Tee\Product\Forms\OptionFormSet,
-    Tee\Product\Forms\PromotionFormSet,
-    View,
-    URL,
-    Redirect,
-    Input,
-    Validator;
+use Tee\Admin\Controllers\AdminBaseController;
+use Tee\System\Breadcrumbs;
+use Tee\Product\Models\Product;
+use Tee\Product\Forms\InformationForm;
+use Tee\Product\Forms\ImageFormSet;
+use Tee\Product\Forms\OptionFormSet;
+use Tee\Product\Forms\PromotionFormSet;
+use ModelForm\Form;
+use View;
+use URL;
+use Redirect;
+use Input;
 
 class ProductController extends AdminBaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         View::share('pageTitle', 'Produtos');
@@ -48,30 +45,65 @@ class ProductController extends AdminBaseController
     }
 
     /**
+     * Get forms
+     * @param array $inputData data for fill forms
+     * @param int $productId id of the product
+     * @return array
+     */
+    public function getForms($inputData, $productId=null) {
+        if($productId)
+            $product = Product::find($productId);
+        else
+            $product = new Product();
+        $informationForm = new InformationForm(['model' => $product, 'data' => $inputData]);
+        $imageFormSet = new ImageFormSet(['data' => $inputData, 'relation' => $product->images()]);
+        //$optionFormSet = new OptionFormSet(['data' => $inputData, 'relation' => $product->attributes()]);
+        //$promotionFormSet = new PromotionFormSet(['data' => $inputData, 'relation' => $product->promotions()]);
+
+        return array(
+            'informationForm' => $informationForm,
+            'imageFormSet' => $imageFormSet,
+            //'optionFormSet' => $optionFormSet,
+            //'promotionFormSet' => $promotionFormSet,
+        );
+    }
+
+    /**
+     * Validate forms
+     * @param array $forms array of forms
+     * @return bool
+     */
+    public function validateForms($forms)
+    {
+        foreach($forms as $form) {
+            if(!$form->isValid())
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Save forms
+     * @param array $forms array of forms
+     * @return bool
+     */
+    public function saveForms($forms)
+    {
+        foreach($forms as $form)
+            $form->save();
+    }
+
+    /**
      * Show the form for creating a new product
      *
      * @return Response
      */
     public function create()
     {
-        $informationForm = new InformationForm([
-            'data' => Input::all()
-        ]);
-
-        $model = $informationForm->getModel();
-
-        $imageFormSet = new ImageFormSet();
-        $optionFormSet = new OptionFormSet();
-        $promotionFormSet = new PromotionFormSet();
-
+        $forms = $this->getForms(Input::old() ?: null);
         return View::make(
             'product::admin.product.create',
-            compact(
-                'informationForm',
-                'imageFormSet',
-                'optionFormSet',
-                'promotionFormSet'
-            ) + array(
+            $forms + array(
                 'pageTitle' => 'Cadastrar Produto',
             )
         );
@@ -85,21 +117,15 @@ class ProductController extends AdminBaseController
      */
     public function store()
     {
-        $model= new Product();
+        $forms = $this->getForms(Input::all());
 
-        $informationForm = new InformationForm([
-            'instance' => $model
-        ]);
-
-        
-
-        $validator = $model->getValidator(Input::all(), 'create');
-
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+        if(!$this->validateForms($forms)) {
+            return Redirect::back()->withErrors(
+                \ModelForm\Form::mergeErrors($forms)
+            )->withInput();
         }
-
-        $model->save();
+            
+        $this->saveForms($forms);
 
         return Redirect::route("admin.product.index");
     }
@@ -112,11 +138,11 @@ class ProductController extends AdminBaseController
      */
     public function edit($id)
     {
-        $model = Product::find($id);
+        $forms = $this->getForms(Input::old() ?: null, $id);
 
         return View::make(
             'product::admin.product.edit',
-            compact('model')  + array(
+            $forms + array(
                 'pageTitle' => 'Editar Produto',
             )
         );
@@ -130,16 +156,15 @@ class ProductController extends AdminBaseController
      */
     public function update($id)
     {
-        $model = Product::findOrFail($id);
-        $model->fill(Input::all());
+        $forms = $this->getForms(Input::all(), $id);
 
-        $validator = $model->getValidator(Input::all(), 'update');
-
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+        if(!$this->validateForms($forms)) {
+            return Redirect::back()->withErrors(
+                \ModelForm\Form::mergeErrors($forms)
+            )->withInput();
         }
-
-        $model->save();
+            
+        $this->saveForms($forms);
 
         return Redirect::route("admin.product.index");
     }
@@ -154,6 +179,6 @@ class ProductController extends AdminBaseController
     {
         Product::destroy($id);
 
-        return Redirect::route("admin.product.index");
+        return Redirect::route("admin.product.index", ['successMessage'=>'Produto removido com sucesso']);
     }
 }

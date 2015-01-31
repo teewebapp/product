@@ -16,6 +16,7 @@
                     Imagens
                 </a>
             </li>
+            {{--
             <li role="presentation">
                 <a href="#tabOptions" aria-controls="tabOptions" role="tab" data-toggle="tab">
                     Attributos e Opções
@@ -26,6 +27,7 @@
                     Promoções
                 </a>
             </li>
+            --}}
         </ul>
 
         <!-- Tab panes -->
@@ -37,7 +39,7 @@
             <div role="tabpanel" class="tab-pane" id="tabImages">
                 @include('product::admin.product._formImages')
             </div>
-
+            {{--
             <div role="tabpanel" class="tab-pane" id="tabOptions">
                 @include('product::admin.product._formOptions')
             </div>
@@ -45,6 +47,7 @@
             <div role="tabpanel" class="tab-pane" id="tabPromotions">
                 @include('product::admin.product._formPromotions')
             </div>
+            --}}
         </div>
 
     </div>

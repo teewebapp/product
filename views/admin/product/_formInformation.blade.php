@@ -1,4 +1,10 @@
 <div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ $informationForm->category_id->label() }}
+            {{ $informationForm->category_id->select(['class'=>'form-control']) }}
+        </div>
+    </div>
     <div class="col-md-2">
         <div class="form-group">
             {{ $informationForm->reference->label() }}
@@ -14,25 +20,31 @@
     <div class="col-md-4">
         <div class="form-group">
             {{ $informationForm->price->label() }}
-            {{ $informationForm->price->text(['class'=>'form-control']) }}
+            {{ $informationForm->price->decimal(['class'=>'form-control']) }}
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             {{ $informationForm->weight->label() }}
-            {{ $informationForm->weight->text(['class'=>'form-control']) }}
+            {{ $informationForm->weight->decimal(['class'=>'form-control']) }}
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             {{ $informationForm->stock->label() }}
-            {{ $informationForm->stock->text(['class'=>'form-control']) }}
+            {{ $informationForm->stock->numerical(['class'=>'form-control']) }}
         </div>
     </div>
     <div class="col-md-12">
         <div class="form-group">
             {{ $informationForm->description->label() }}
             {{ $informationForm->description->text(['class'=>'form-control']) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ $informationForm->text->label() }}
+            {{ $informationForm->text->editor(['class'=>'form-control']) }}
         </div>
     </div>
 </div>

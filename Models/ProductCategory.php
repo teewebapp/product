@@ -35,7 +35,7 @@ class ProductCategory extends Model implements SluggableInterface
 
     public function products()
     {
-        return $this->belongsToMany(__NAMESPACE__.'\\Product');
+        return $this->hasMany(__NAMESPACE__.'\\Product', 'category_id');
     }
 
     public function parent()
@@ -46,7 +46,10 @@ class ProductCategory extends Model implements SluggableInterface
     public function getValidator($data, $scope)
     {
         return Validator::make($data, [
-            'name' => 'required'
+            'name' => 'required',
+            'category_id' => 'required',
+            'price' => 'required',
+            'description' => 'required',
         ]);
     }
 

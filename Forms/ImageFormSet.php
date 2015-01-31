@@ -6,8 +6,8 @@ use ModelForm\FormSet;
 
 class ImageFormSet extends FormSet
 {
-    public function makeForm()
+    public function makeForm($model=null)
     {
-        return new ImageForm();
+        return new ImageForm(['model'=>$model]);
     }
 }

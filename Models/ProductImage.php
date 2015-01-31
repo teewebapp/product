@@ -6,16 +6,12 @@ use Tee\System\Models\Model;
 
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait;
-
+use Validator;
 use URL;
 
 class ProductImage extends Model implements StaplerableInterface
 {
     use EloquentTrait;
-
-    public static $rules = [
-        
-    ];
 
     protected $fillable = [
         'name',
@@ -37,6 +33,7 @@ class ProductImage extends Model implements StaplerableInterface
     {
         return array(
             'name' => 'Nome',
+            'image' => 'Imagem',
             'description' => 'Descrição'
         );
     }
@@ -52,5 +49,14 @@ class ProductImage extends Model implements StaplerableInterface
             return URL::to($this->image->url());
         else
             return URL::to(moduleAsset('system', 'images/no-photo.jpg'));
+    }
+
+    public function getValidator($data, $scope)
+    {
+        $v = Validator::make($data, []);
+        $v->sometimes('image', 'required', function() {
+            return empty($this->image_file_name);
+        });
+        return $v;
     }
 }

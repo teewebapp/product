@@ -19,4 +19,11 @@ class OptionForm extends Form
     {
         return new ProductAttribute();
     }
+
+    public function makeValidator($data)
+    {
+        $validator = $this->_model->getValidator($data, null);
+        $validator->setAttributeNames(ProductAttribute::getAttributeNames());
+        return $validator;
+    }
 }

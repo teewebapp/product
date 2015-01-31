@@ -16,7 +16,14 @@ class Product extends Model implements SluggableInterface
     use SoftDeletingTrait;
     use SluggableTrait;
 
+    protected $sluggable = [
+        'build_from' => 'name',
+        'save_to'    => 'slug',
+    ];
+
     public static $rules = [
+        'category_id' => 'required',
+        'description' => 'required',
         'name' => 'required',
         'reference' => 'required',
         'price' => 'required',
@@ -30,7 +37,8 @@ class Product extends Model implements SluggableInterface
         'price',
         'weight',
         'slug',
-        'stock'
+        'stock',
+        'category_id'
     ];
 
     public static function getAttributeNames()
@@ -42,7 +50,8 @@ class Product extends Model implements SluggableInterface
             'text' => 'Texto',
             'price' => 'Preço',
             'weight' => 'Peso (gramas)',
-            'stock' => 'Estoque'
+            'stock' => 'Estoque',
+            'category_id' => 'Categoria',
         );
     }
 
@@ -51,9 +60,9 @@ class Product extends Model implements SluggableInterface
         return $this->hasMany(__NAMESPACE__.'\\ProductImage', 'product_id');
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(__NAMESPACE__.'\\Product');
+        return $this->belongsTo(__NAMESPACE__.'\\ProductCategory');
     }
 
     public function attributes()

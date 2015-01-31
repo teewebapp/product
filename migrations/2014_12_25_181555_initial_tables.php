@@ -84,20 +84,6 @@ class InitialTables extends Migration {
 			$table->timestamps();
 		});
 
-
-		Schema::create('category_product', function(Blueprint $table)
-		{
-			$table->increments('id');
-
-			$table->unsignedInteger('category_id');
-			$table->foreign('category_id')->references('id')->on('product_categories');
-
-			$table->unsignedInteger('product_id');
-			$table->foreign('product_id')->references('id')->on('products');
-
-			$table->timestamps();
-		});
-
 		Schema::create('product_attributes', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -137,7 +123,6 @@ class InitialTables extends Migration {
 	{
 		Schema::drop('products');
 		Schema::drop('product_images');
-		Schema::drop('category_product');
 		Schema::drop('product_categories');
 
 		Schema::drop('product_promotion');

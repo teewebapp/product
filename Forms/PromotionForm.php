@@ -19,4 +19,11 @@ class PromotionForm extends Form
     {
         return new Promotion();
     }
+
+    public function makeValidator($data)
+    {
+        $validator = $this->_model->getValidator($data, null);
+        $validator->setAttributeNames(Promotion::getAttributeNames());
+        return $validator;
+    }
 }
