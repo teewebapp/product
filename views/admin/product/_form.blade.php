@@ -1,6 +1,6 @@
 @include('system::partials.validation')
 
-{{ Form::resource($informationForm->getModel(), "admin.product", ['files' => true]) }}
+{{ Form::resource($informationForm->getModel(), ["admin.product", 'category' => Input::get('category')], ['files' => true]) }}
 
     <div role="tabpanel" class="nav-tabs-custom">
 

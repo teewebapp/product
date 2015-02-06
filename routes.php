@@ -13,3 +13,13 @@ Route::group(['prefix' => 'admin'], function() {
         ['except' => array('show')]
     );
 });
+
+Route::any('/products', [
+    'as' => 'product.index',
+    'uses' => __NAMESPACE__.'\Controllers\ProductController@index'
+]);
+
+Route::any('/product/:slug', [
+    'as' => 'product.index',
+    'uses' => __NAMESPACE__.'\Controllers\ProductController@show'
+]);

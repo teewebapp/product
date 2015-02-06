@@ -5,6 +5,7 @@ namespace Tee\Product\Controllers\Admin;
 use Tee\Admin\Controllers\AdminBaseController;
 use Tee\System\Breadcrumbs;
 use Tee\Product\Models\Product;
+use Tee\Product\Models\ProductCategory;
 use Tee\Product\Forms\InformationForm;
 use Tee\Product\Forms\ImageFormSet;
 use Tee\Product\Forms\OptionFormSet;
@@ -17,16 +18,19 @@ use Input;
 
 class ProductController extends AdminBaseController
 {
+    public $category = null;
+
     public function __construct()
     {
         parent::__construct();
 
-        View::share('pageTitle', 'Produtos');
+        if(Input::get('category'))
+            $this->category = ProductCategory::find((int)Input::get('category'));
 
-        Breadcrumbs::addCrumb(
-            'Produtos',
-            URL::route("admin.product.index")
-        );
+        $title = 'Produtos'.($this->category ? ': '.$this->category->name : '');
+
+        View::share('pageTitle', $title);
+        Breadcrumbs::addCrumb($title, route("admin.product.index"));
     }
 
     /**
@@ -36,7 +40,12 @@ class ProductController extends AdminBaseController
      */
     public function index()
     {
-        $models = Product::get();
+        if($this->category)
+            $query = $this->category->products();
+        else
+            $query = Product::query();
+
+        $models = $query->paginate(15);
 
         return View::make(
             'product::admin.product.index',
@@ -55,6 +64,10 @@ class ProductController extends AdminBaseController
             $product = Product::find($productId);
         else
             $product = new Product();
+
+        if($this->category && empty($product->category_id))
+            $product->category_id = $this->category->id;
+
         $informationForm = new InformationForm(['model' => $product, 'data' => $inputData]);
         $imageFormSet = new ImageFormSet(['data' => $inputData, 'relation' => $product->images()]);
         //$optionFormSet = new OptionFormSet(['data' => $inputData, 'relation' => $product->attributes()]);
@@ -127,7 +140,7 @@ class ProductController extends AdminBaseController
             
         $this->saveForms($forms);
 
-        return Redirect::route("admin.product.index");
+        return Redirect::route("admin.product.index", ['category'=>Input::get('category')]);
     }
 
     /**
@@ -166,7 +179,7 @@ class ProductController extends AdminBaseController
             
         $this->saveForms($forms);
 
-        return Redirect::route("admin.product.index");
+        return Redirect::route("admin.product.index", ['category'=>Input::get('category')]);
     }
 
     /**
@@ -179,6 +192,7 @@ class ProductController extends AdminBaseController
     {
         Product::destroy($id);
 
-        return Redirect::route("admin.product.index", ['successMessage'=>'Produto removido com sucesso']);
+        return Redirect::route("admin.product.index", ['successMessage'=>'Produto removido com sucesso', 'category' => Input::get('category')]);
     }
+
 }

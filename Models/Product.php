@@ -60,6 +60,16 @@ class Product extends Model implements SluggableInterface
         return $this->hasMany(__NAMESPACE__.'\\ProductImage', 'product_id');
     }
 
+    public function getMainImageAttribute()
+    {
+        $image = $this->images->first();
+        if(!$image) {
+            $image = new ProductImage();
+            $image->product_id = $this->id;
+        }
+        return $image;
+    }
+
     public function category()
     {
         return $this->belongsTo(__NAMESPACE__.'\\ProductCategory');
@@ -73,5 +83,10 @@ class Product extends Model implements SluggableInterface
     public function promotions()
     {
         return $this->belongsToMany(__NAMESPACE__.'\\Promotion');
+    }
+
+    public function getUrlAttribute()
+    {
+        return route('product.show', ['slug'=>$this->slug]);
     }
 }

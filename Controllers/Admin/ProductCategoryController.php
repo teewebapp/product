@@ -16,7 +16,8 @@ class ProductCategoryController extends ResourceController
     public function getColumns()
     {
         return [
-            'fullName'
+            'fullName',
+            'productCount'
         ];
     }
 

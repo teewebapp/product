@@ -29,13 +29,39 @@ class ProductCategory extends Model implements SluggableInterface
             'name' => 'Nome',
             'fullName' => 'Nome',
             'description' => 'Descrição',
-            'category_id' => 'Categoria Pai'
+            'category_id' => 'Categoria Pai',
+            'productCount' => 'Qtde. Produtos',
         );
     }
 
     public function products()
     {
         return $this->hasMany(__NAMESPACE__.'\\Product', 'category_id');
+    }
+
+    public function deepProducts()
+    {
+        $listIdCategory = $this->deepSubitems()->fetch('id');
+        $listIdCategory->add($this->id);
+        return Product::whereIn('category_id', $listIdCategory->toArray());
+    }
+
+    public function deepSubitems()
+    {
+        $subitems = $this->subitems;
+
+        foreach($subitems as $subitem) {
+            foreach($subitem->deepSubitems() as $subitem) {
+                $subitems->add($subitem);
+            }
+        }
+
+        return $subitems;
+    }
+
+    public function subitems()
+    {
+        return $this->hasMany(__NAMESPACE__.'\\ProductCategory', 'category_id');
     }
 
     public function parent()
@@ -62,5 +88,20 @@ class ProductCategory extends Model implements SluggableInterface
             $aux = $aux->parent;
         }
         return $name;
+    }
+
+    /**
+     * Get product count
+     *
+     * @return int
+     */
+    public function getProductCountAttribute()
+    {
+        return $this->products()->count();
+    }
+
+    public function getUrlAttribute() 
+    {
+        return route('product.index', ['category'=>$this->slug]);
     }
 }

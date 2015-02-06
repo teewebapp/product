@@ -4,6 +4,7 @@
     <table class="table table-hover table-banner-list">
         <tbody>
             <tr>
+                <th>REF</th>
                 <th>Produto</th>
                 <th>Categoria</th>
                 <th>Valor</th>
@@ -13,12 +14,13 @@
             @if($models->count() > 0)
                 @foreach($models as $model)
                     <tr data-id="{{{ $model->id }}}">
+                        <td>{{{ $model->reference }}}</td>
                         <td>{{{ $model->name }}}</td>
                         <td>{{{ $model->category->fullName }}}</td>
                         <td>{{{ $model->price }}}</td>
                         <td>
-                            {{ HTML::updateButton('Editar', route("admin.product.edit", $model->id)) }}
-                            {{ HTML::deleteButton('Remover', route("admin.product.destroy", $model->id)) }}
+                            {{ HTML::updateButton('Editar', route("admin.product.edit", ['id'=>$model->id, 'category'=>Input::get('category')])) }}
+                            {{ HTML::deleteButton('Remover', route("admin.product.destroy", ['id'=>$model->id, 'category'=>Input::get('category')])) }}
                         </td>
                     </tr>
                 @endforeach
@@ -32,7 +34,11 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ route("admin.product.create") }}">
+    {{ $models->addQuery('category', Input::get('category'))->links() }}
+
+    <div style="clear:both;"></div>
+
+    <a class="btn btn-primary" href="{{ route("admin.product.create", ['category'=>Input::get('category')]) }}">
         Adicionar Produto
     </a>
 @stop

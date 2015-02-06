@@ -1,4 +1,5 @@
 {
-    "enabled":true,
+    "enabled": true,
+    "order": 20,
     "provider": ["Tee\\Product\\ServiceProvider"]
 }
