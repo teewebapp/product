@@ -6,7 +6,7 @@ use Tee\Admin\Controllers\AdminBaseController;
 use Tee\System\Breadcrumbs;
 use Tee\Product\Models\Product;
 use Tee\Product\Models\ProductCategory;
-use Tee\Product\Forms\InformationForm;
+use Tee\Product\Forms\ProductForm;
 use Tee\Product\Forms\ImageFormSet;
 use Tee\Product\Forms\OptionFormSet;
 use Tee\Product\Forms\PromotionFormSet;
@@ -68,15 +68,15 @@ class ProductController extends AdminBaseController
         if($this->category && empty($product->category_id))
             $product->category_id = $this->category->id;
 
-        $informationForm = new InformationForm(['model' => $product, 'data' => $inputData]);
+        $productForm = new ProductForm(['model' => $product, 'data' => $inputData]);
         $imageFormSet = new ImageFormSet(['data' => $inputData, 'relation' => $product->images()]);
-        //$optionFormSet = new OptionFormSet(['data' => $inputData, 'relation' => $product->attributes()]);
+        $optionFormSet = new OptionFormSet(['data' => $inputData, 'relation' => $product->attributes()]);
         //$promotionFormSet = new PromotionFormSet(['data' => $inputData, 'relation' => $product->promotions()]);
 
         return array(
-            'informationForm' => $informationForm,
+            'productForm' => $productForm,
             'imageFormSet' => $imageFormSet,
-            //'optionFormSet' => $optionFormSet,
+            'optionFormSet' => $optionFormSet,
             //'promotionFormSet' => $promotionFormSet,
         );
     }

@@ -22,8 +22,10 @@ class ProductImage extends Model implements StaplerableInterface
     public function __construct(array $attributes = array()) {
         $this->hasAttachedFile('image', [
             'styles' => [
-                'thumbnail' => 'x248',
-            ]
+                'thumbnail' => '275x',
+                'small' => '100x',
+                'big' => '1000x',
+            ],
         ]);
 
         parent::__construct($attributes);

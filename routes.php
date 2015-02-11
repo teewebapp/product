@@ -19,7 +19,7 @@ Route::any('/products', [
     'uses' => __NAMESPACE__.'\Controllers\ProductController@index'
 ]);
 
-Route::any('/product/:slug', [
-    'as' => 'product.index',
+Route::any('/product/{slug}', [
+    'as' => 'product.show',
     'uses' => __NAMESPACE__.'\Controllers\ProductController@show'
 ]);

@@ -1,6 +1,6 @@
 @include('system::partials.validation')
 
-{{ Form::resource($informationForm->getModel(), ["admin.product", 'category' => Input::get('category')], ['files' => true]) }}
+{{ Form::resource($productForm->getModel(), ["admin.product", 'category' => Input::get('category')], ['files' => true]) }}
 
     <div role="tabpanel" class="nav-tabs-custom">
 
@@ -8,7 +8,7 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
                 <a id="productInfoTab" href="#tabInformation" aria-controls="tabInformation" role="tab" data-toggle="tab">
-                    Informações Básicas
+                    Produto
                 </a>
             </li>
             <li role="presentation">
@@ -16,12 +16,12 @@
                     Imagens
                 </a>
             </li>
-            {{--
             <li role="presentation">
                 <a href="#tabOptions" aria-controls="tabOptions" role="tab" data-toggle="tab">
-                    Attributos e Opções
+                    Informações
                 </a>
             </li>
+            {{--
             <li role="presentation">
                 <a href="#tabPromotions" aria-controls="tabPromotions" role="tab" data-toggle="tab">
                     Promoções
@@ -33,17 +33,18 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tabInformation">
-                @include('product::admin.product._formInformation')
+                @include('product::admin.product._formProduct')
             </div>
 
             <div role="tabpanel" class="tab-pane" id="tabImages">
                 @include('product::admin.product._formImages')
             </div>
-            {{--
+
             <div role="tabpanel" class="tab-pane" id="tabOptions">
                 @include('product::admin.product._formOptions')
             </div>
 
+            {{--
             <div role="tabpanel" class="tab-pane" id="tabPromotions">
                 @include('product::admin.product._formPromotions')
             </div>
@@ -59,6 +60,6 @@
         });
     </script>
 
-    {{ Form::submit($informationForm->getModel()->exists ? 'Editar' : 'Cadastrar', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit($productForm->getModel()->exists ? 'Editar' : 'Cadastrar', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}

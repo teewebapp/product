@@ -9,7 +9,7 @@ use ModelForm\Form,
     Tee\Product\Models\Product,
     Tee\Product\Models\ProductCategory;
 
-class InformationForm extends Form
+class ProductForm extends Form
 {
     public function makeFields()
     {
