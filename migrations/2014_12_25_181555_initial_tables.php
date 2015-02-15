@@ -77,6 +77,7 @@ class InitialTables extends Migration {
 			$table->increments('id');
 
 			$table->string('name');
+			$table->string('slug');
 			$table->string('description');
 			$table->unsignedInteger('category_id')->nullable();
 			$table->foreign('category_id')->references('id')->on('product_categories');

@@ -6,7 +6,7 @@ use Tee\System\Models\Model;
 
 use URL;
 
-class PromotionAttributeOption extends Model
+class ProductAttributeOption extends Model
 {
     public static $rules = [
         'value' => 'required'
