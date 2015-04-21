@@ -3,11 +3,13 @@
 namespace Tee\Product\Models;
 
 use Tee\System\Models\Model;
-
+use Tee\System\Traits\CurrentSiteTrait;
 use URL;
 
 class Promotion extends Model
 {
+    use CurrentSiteTrait;
+
     public static $rules = [
         'discount' => 'required'
     ];

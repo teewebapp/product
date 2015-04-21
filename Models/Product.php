@@ -3,16 +3,15 @@
 namespace Tee\Product\Models;
 
 use Tee\System\Models\Model;
-
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
-
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-
+use Tee\System\Traits\CurrentSiteTrait;
 use URL;
 
 class Product extends Model implements SluggableInterface
 {
+    use CurrentSiteTrait;
     use SoftDeletingTrait;
     use SluggableTrait;
 

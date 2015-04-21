@@ -6,10 +6,12 @@ use Tee\System\Models\Model,
     Cviebrock\EloquentSluggable\SluggableInterface,
     URL,
     Validator,
-    Cviebrock\EloquentSluggable\SluggableTrait;
+    Cviebrock\EloquentSluggable\SluggableTrait,
+    Tee\System\Traits\CurrentSiteTrait;
 
 class ProductCategory extends Model implements SluggableInterface
 {
+    use CurrentSiteTrait;
     use SluggableTrait;
 
     protected $sluggable = [
@@ -74,7 +76,6 @@ class ProductCategory extends Model implements SluggableInterface
         return Validator::make($data, [
             'name' => 'required',
             'category_id' => 'required',
-            'price' => 'required',
             'description' => 'required',
         ]);
     }

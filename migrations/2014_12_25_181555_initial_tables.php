@@ -22,6 +22,8 @@ class InitialTables extends Migration {
 			$table->text('text');
 			$table->integer('stock')->nullable();
 			$table->integer('weight')->nullable();
+			$table->unsignedInteger('site_id');
+			$table->foreign('site_id')->references('id')->on('sites');
 
 			$table->softDeletes();
 			$table->timestamps();
@@ -55,6 +57,8 @@ class InitialTables extends Migration {
 			$table->date('date_end')->nullable();
 			$table->decimal('discount', 10,2);
 			$table->string('discount_type');
+			$table->unsignedInteger('site_id');
+			$table->foreign('site_id')->references('id')->on('sites');
 
 			$table->timestamps();
 		});
@@ -81,6 +85,8 @@ class InitialTables extends Migration {
 			$table->string('description');
 			$table->unsignedInteger('category_id')->nullable();
 			$table->foreign('category_id')->references('id')->on('product_categories');
+			$table->unsignedInteger('site_id');
+			$table->foreign('site_id')->references('id')->on('sites');
 
 			$table->timestamps();
 		});
